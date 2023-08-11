@@ -137,7 +137,7 @@ namespace DED_MonitoringSensor.Views.FirstTabView
                     visible3.Add(double.Parse(splitData[4]));
                     sound.Add(double.Parse(splitData[5]));
                     powder.Add(double.Parse(splitData[6]));
-
+                    // string 클래스 불변성으로 인한 메모리, StringBuilder 수정 예정
                     string calculatedData = "";
 
                     calculatedData += Calculate(LaserPower, laserPower);
