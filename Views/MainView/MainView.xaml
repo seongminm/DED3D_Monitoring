@@ -1,0 +1,29 @@
+﻿<Window x:Class="DED_MonitoringSensor.Views.MainView.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DED_MonitoringSensor.Views.MainView"
+        xmlns:local1="clr-namespace:DED_MonitoringSensor.Views.FirstTabView"
+        xmlns:local2="clr-namespace:DED_MonitoringSensor.Views.SecondTabView"
+        xmlns:local3="clr-namespace:DED_MonitoringSensor.Views.ThirdTabView"
+        xmlns:local4="clr-namespace:DED_MonitoringSensor.Views.FourthTabView"
+        mc:Ignorable="d"
+        Title="DED Monitoring Sesnor" Height="832" Width="800" MinHeight="832" MinWidth="800" >
+    <Grid>
+        <TabControl Margin="5">
+            <TabItem Header="Serial Chart">
+                <local1:FirstTabView/>
+            </TabItem>
+            <TabItem Header="Udp Chart">
+                <local2:SecondTabView/>
+            </TabItem>
+            <TabItem Header="Serial">
+                <local3:ThirdTabView/>
+            </TabItem>
+            <TabItem Header="UDP">
+                <local4:FourthTabView/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
