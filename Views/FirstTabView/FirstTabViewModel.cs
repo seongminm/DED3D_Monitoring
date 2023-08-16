@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 
 namespace DED_MonitoringSensor.Views.FirstTabView
 {
@@ -118,34 +119,40 @@ namespace DED_MonitoringSensor.Views.FirstTabView
             string[] splitData = data.Split('/');
             if(splitData.Length >= 7 && splitData.Length <= 8)
             {
-               
+
                 if (splitData[0].Equals("1"))
                 {
-                    laserPower.Add(double.Parse(splitData[1]));
-                    visible1.Add(double.Parse(splitData[2]));
-                    visible2.Add(double.Parse(splitData[3]));
-                    visible3.Add(double.Parse(splitData[4]));
+                    visible1.Add(double.Parse(splitData[1]));
+                    visible2.Add(double.Parse(splitData[2]));
+                    visible3.Add(double.Parse(splitData[3]));
+                    powder.Add(double.Parse(splitData[4]));
                     sound.Add(double.Parse(splitData[5]));
-                    powder.Add(double.Parse(splitData[6]));
-                  
+                    laserPower.Add(double.Parse(splitData[6]));
+
                 }
                 else if (splitData[0].Equals("0") && laserPower.Count != 0)
                 {
-                    laserPower.Add(double.Parse(splitData[1]));
-                    visible1.Add(double.Parse(splitData[2]));
-                    visible2.Add(double.Parse(splitData[3]));
-                    visible3.Add(double.Parse(splitData[4]));
+                    visible1.Add(double.Parse(splitData[1]));
+                    visible2.Add(double.Parse(splitData[2]));
+                    visible3.Add(double.Parse(splitData[3]));
+                    powder.Add(double.Parse(splitData[4]));
                     sound.Add(double.Parse(splitData[5]));
-                    powder.Add(double.Parse(splitData[6]));
-                    // string 클래스 불변성으로 인한 메모리, StringBuilder 수정 예정
-                    string calculatedData = "";
+                    laserPower.Add(double.Parse(splitData[6]));
 
-                    calculatedData += Calculate(LaserPower, laserPower);
-                    calculatedData += "/" + Calculate(Visible1, visible1);
-                    calculatedData += "/" + Calculate(Visible2, visible2);
-                    calculatedData += "/" + Calculate(Visible3, visible3);
-                    calculatedData += "/" + Calculate(Sound, sound);
-                    calculatedData += "/" + Calculate(Powder, powder);
+                    StringBuilder calculatedData = new StringBuilder();
+                    calculatedData.Append(Calculate(LaserPower, laserPower));
+                    calculatedData.Append("/");
+                    calculatedData.Append(Calculate(Visible1, visible1));
+                    calculatedData.Append("/");
+                    calculatedData.Append(Calculate(Visible2, visible2));
+                    calculatedData.Append("/");
+                    calculatedData.Append(Calculate(Visible3, visible3));
+                    calculatedData.Append("/");
+                    calculatedData.Append(Calculate(Sound, sound));
+                    calculatedData.Append("/");
+                    calculatedData.Append(Calculate(Powder, powder));
+
+                    string calculatedDataString = calculatedData.ToString();
 
                     LaserPower.GrpahUpdate(dataCount, GraphState);
                     Visible1.GrpahUpdate(dataCount, GraphState);
@@ -168,12 +175,12 @@ namespace DED_MonitoringSensor.Views.FirstTabView
 
                     if (CsvViewModel.CsvState)
                     {
-                        CsvViewModel.Add(formattedTime, calculatedData);
+                        CsvViewModel.Add(formattedTime, calculatedDataString);
                     }
 
                     if (DatabaseViewModel.MysqlState)
                     {
-                        DatabaseViewModel.AddDatabase(formattedTime, calculatedData);
+                        DatabaseViewModel.AddDatabase(formattedTime, calculatedDataString);
                     }
                 }
             }

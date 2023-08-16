@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 
 namespace DED_MonitoringSensor.Views.SecondTabView
 {
@@ -53,7 +54,7 @@ namespace DED_MonitoringSensor.Views.SecondTabView
         public RelayCommand GraphClearCommand { get; set; }
 
         private double dataCount = 1;
-        private string line = $"{"Time"},{"Temperature"},{"Humidity"}, {"PM1.0"}, {"PM2.5"}, {"PM10"}, {"PID"}, {"MICS"}, {"CJMCU"}, {"MQ"}, {"HCHO"}";
+        private string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"visible1_avg"},{"visible1_std"},{"visible2_avg"},{"visible2_std"},{"visible3_avg"},{"visible3_std"},{"Sound_avg"},{"Sound_std"},{"Powder_avg"},{"Powder_std"}";
 
         private List<double> laserPower = new List<double>();
         private List<double> visible1 = new List<double>();
@@ -122,32 +123,33 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
                 if (splitData[0].Equals("1"))
                 {
-                    laserPower.Add(double.Parse(splitData[1]));
-                    visible1.Add(double.Parse(splitData[2]));
-                    visible2.Add(double.Parse(splitData[3]));
-                    visible3.Add(double.Parse(splitData[4]));
+                    visible1.Add(double.Parse(splitData[1]));
+                    visible2.Add(double.Parse(splitData[2]));
+                    visible3.Add(double.Parse(splitData[3]));
+                    powder.Add(double.Parse(splitData[4]));
                     sound.Add(double.Parse(splitData[5]));
-                    powder.Add(double.Parse(splitData[6]));
+                    laserPower.Add(double.Parse(splitData[6]));
 
                 }
                 else if (splitData[0].Equals("0") && laserPower.Count != 0)
                 {
-                    laserPower.Add(double.Parse(splitData[1]));
-                    visible1.Add(double.Parse(splitData[2]));
-                    visible2.Add(double.Parse(splitData[3]));
-                    visible3.Add(double.Parse(splitData[4]));
+                    visible1.Add(double.Parse(splitData[1]));
+                    visible2.Add(double.Parse(splitData[2]));
+                    visible3.Add(double.Parse(splitData[3]));
+                    powder.Add(double.Parse(splitData[4]));
                     sound.Add(double.Parse(splitData[5]));
-                    powder.Add(double.Parse(splitData[6]));
+                    laserPower.Add(double.Parse(splitData[6]));
 
-                    string calculatedData = "";
+                    StringBuilder calculatedData = new StringBuilder();
+                    calculatedData.Append(Calculate(LaserPower, laserPower));
+                    calculatedData.Append(Calculate(Visible1, visible1));
+                    calculatedData.Append(Calculate(Visible2, visible2));
+                    calculatedData.Append(Calculate(Visible3, visible3));
+                    calculatedData.Append(Calculate(Sound, sound));
+                    calculatedData.Append(Calculate(Powder, powder));
 
-                    calculatedData += Calculate(LaserPower, laserPower);
-                    calculatedData += "/" + Calculate(Visible1, visible1);
-                    calculatedData += "/" + Calculate(Visible2, visible2);
-                    calculatedData += "/" + Calculate(Visible3, visible3);
-                    calculatedData += "/" + Calculate(Sound, sound);
-                    calculatedData += "/" + Calculate(Powder, powder);
-
+                    string calculatedDataString = calculatedData.ToString();
+                   
                     LaserPower.GrpahUpdate(dataCount, GraphState);
                     Visible1.GrpahUpdate(dataCount, GraphState);
                     Visible2.GrpahUpdate(dataCount, GraphState);
@@ -169,12 +171,12 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
                     if (CsvViewModel.CsvState)
                     {
-                        CsvViewModel.Add(formattedTime, calculatedData);
+                        CsvViewModel.Add(formattedTime, calculatedDataString);
                     }
 
                     if (DatabaseViewModel.MysqlState)
                     {
-                        DatabaseViewModel.AddDatabase(formattedTime, calculatedData);
+                        DatabaseViewModel.AddDatabase(formattedTime, calculatedDataString);
                     }
                 }
             }
@@ -189,7 +191,7 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             oxyplotViewModel.Output = Math.Round(mean, 2);
             oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
 
-            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString();
+            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString() + "/";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

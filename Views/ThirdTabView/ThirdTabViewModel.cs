@@ -3,6 +3,7 @@ using DED_MonitoringSensor.ViewModels;
 using DED_MonitoringSensor.ViewModels.Command;
 using System;
 using System.ComponentModel;
+using System.Text;
 
 namespace DED_MonitoringSensor.Views.ThirdTabView
 {
@@ -14,7 +15,9 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
         public RelayCommand ClearCommand { get; set; }
         public RelayCommand Send1Command { get; set; }
         public RelayCommand Send2Command { get; set; }
-        
+
+        private StringBuilder stringBuilder;
+
         private string text;
         public string Text
         {
@@ -67,6 +70,8 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             Send1Command = new RelayCommand(SendSerial1);
             Send2Command = new RelayCommand(SendSerial2);
 
+            stringBuilder = new StringBuilder();
+
             TextBox1 = "";
             TextBox2 = "";
 
@@ -74,7 +79,17 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
 
         private void DataReceived()
         {
-            Text += getDataService.StringData + "\n";
+            stringBuilder.Append(getDataService.StringData);
+            stringBuilder.Append("\n");
+            if (stringBuilder.Length >= 1000)
+            {
+                int a = stringBuilder.Length - 1000;
+                stringBuilder.Remove(0, a);
+
+                Text = "The oldest data was removed... \n" + stringBuilder.ToString();
+                return;
+            }
+            Text = stringBuilder.ToString();
         }
 
         private void SendSerial1()
@@ -98,6 +113,7 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
 
         private void Clear()
         {
+            stringBuilder.Clear();
             Text = "";
             SentText = "";
             TextBox1 = "";
