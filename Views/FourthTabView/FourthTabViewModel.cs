@@ -107,9 +107,10 @@ namespace DED_MonitoringSensor.Views.FourthTabView
         private void DataReceived()
         {
             stringBuilder.Append(getDataService.StringData);
-            if(stringBuilder.Length >= 1000)
+            if(stringBuilder.Length >= 10000)
             {
-                int a = stringBuilder.Length - 1000;
+                int a = stringBuilder.Length - 10000;
+                
                 stringBuilder.Remove(0, a);
                 
                 Text = "The oldest data was removed... \n" + stringBuilder.ToString();

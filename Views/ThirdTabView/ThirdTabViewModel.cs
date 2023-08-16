@@ -81,9 +81,9 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
         {
             stringBuilder.Append(getDataService.StringData);
             stringBuilder.Append("\n");
-            if (stringBuilder.Length >= 1000)
+            if (stringBuilder.Length >= 10000)
             {
-                int a = stringBuilder.Length - 1000;
+                int a = stringBuilder.Length - 10000;
                 stringBuilder.Remove(0, a);
 
                 Text = "The oldest data was removed... \n" + stringBuilder.ToString();

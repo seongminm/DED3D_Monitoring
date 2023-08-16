@@ -47,10 +47,11 @@ namespace DED_MonitoringSensor.Services
         }
         public void CloseSerial()
         {
-            serialPort.DataReceived -= SerialPort_DataReceived;
-            serialPort.DiscardInBuffer();
+            
             try
             {
+                serialPort.DiscardInBuffer();
+                serialPort.DataReceived -= SerialPort_DataReceived;
                 serialPort.Close();
 
             }
