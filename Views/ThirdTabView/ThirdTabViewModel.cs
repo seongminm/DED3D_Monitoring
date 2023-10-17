@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DED_MonitoringSensor.Views.ThirdTabView
 {
-    class ThirdTabViewModel : INotifyPropertyChanged
+    class ThirdTabViewModel : ViewModelBase
     {
         public SerialViewModel SerialViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
@@ -21,42 +21,22 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
         private string text;
         public string Text
         {
-            get { return text; }
-            set
-            { 
-                    text = value;
-                    OnPropertyChanged(nameof(Text));
-            }
+            get => text; set => SetProperty(ref text, value);
         }
         private string sentText;
         public string SentText
         {
-            get { return sentText; }
-            set
-            {
-                sentText = value;
-                OnPropertyChanged(nameof(SentText));
-            }
+            get => sentText; set => SetProperty(ref sentText, value);
         }
         private string textbox1;
         public string TextBox1
         {
-            get { return textbox1; }
-            set
-            {
-                textbox1 = value;
-                OnPropertyChanged(nameof(TextBox1));
-            }
+            get => textbox1; set => SetProperty(ref textbox1, value);
         }
         private string textBox2;
         public string TextBox2
         {
-            get { return textBox2; }
-            set
-            {
-                textBox2 = value;
-                OnPropertyChanged(nameof(TextBox2));
-            }
+            get => textBox2; set => SetProperty(ref textBox2, value);
         }
 
         public ThirdTabViewModel()
@@ -120,11 +100,7 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             TextBox2 = "";
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+       
 
     }
 }

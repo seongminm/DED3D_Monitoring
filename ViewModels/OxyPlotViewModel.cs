@@ -1,31 +1,22 @@
 ﻿using OxyPlot.Series;
 using OxyPlot;
 using System.ComponentModel;
+using DED_MonitoringSensor.ViewModels;
 
 namespace DED_MonitoringSensor.Views
 {
-    class OxyPlotViewModel : INotifyPropertyChanged
+    class OxyPlotViewModel : ViewModelBase
     {
         private double output;
         public double Output
         {
-            get { return output; }
-            set
-            {
-                output = value;
-                OnPropertyChanged(nameof(Output));
-            }
+            get => output; set => SetProperty(ref output, value);
         }
 
         private double std;
         public double Std
         {
-            get { return std; }
-            set
-            {
-                std = value;
-                OnPropertyChanged(nameof(Std));
-            }
+            get => std; set => SetProperty(ref std, value);
         }
 
         public PlotModel PlotModel { get; set; }
@@ -57,11 +48,7 @@ namespace DED_MonitoringSensor.Views
             Std = 0;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+       
 
     }
 }

@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\SerialViewModel.cs" />
     <Compile Include="ViewModels\TimerViewModel.cs" />
     <Compile Include="ViewModels\UdpViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\FirstTabView\FirstTabView.xaml.cs">
       <DependentUpon>FirstTabView.xaml</DependentUpon>
     </Compile>

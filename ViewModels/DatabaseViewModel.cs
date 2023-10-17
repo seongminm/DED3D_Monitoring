@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace DED_MonitoringSensor.ViewModels
 {
-    class DatabaseViewModel : INotifyPropertyChanged
+    class DatabaseViewModel : ViewModelBase
     {
         DatabasePopView databasePopView;
         DatabasePopViewModel databasePopViewModel;
@@ -20,24 +20,14 @@ namespace DED_MonitoringSensor.ViewModels
         private bool mysqlState;
         public bool MysqlState
         {
-            get { return mysqlState; }
-            set
-            {
-                mysqlState = value;
-                OnPropertyChanged(nameof(MysqlState));
-            }
+            get => mysqlState; set => SetProperty(ref mysqlState, value);
         }
 
 
         private RelayCommand mysqlCommand;
         public RelayCommand MysqlCommand
         {
-            get { return mysqlCommand; ; }
-            set
-            {
-                mysqlCommand = value;
-                OnPropertyChanged(nameof(MysqlCommand));
-            }
+            get => mysqlCommand; set => SetProperty(ref mysqlCommand, value);
         }
 
 
@@ -92,10 +82,6 @@ namespace DED_MonitoringSensor.ViewModels
             databaseService.AddData(timer, data);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

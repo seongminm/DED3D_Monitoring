@@ -5,62 +5,38 @@ using System.ComponentModel;
 namespace DED_MonitoringSensor.ViewModels
 {
 
-    class UdpViewModel : INotifyPropertyChanged
+    class UdpViewModel : ViewModelBase
     {
         private string ip;
         public string Ip
         {
-            get { return ip; }
-            set
-            {
-                ip = value;
-                OnPropertyChanged(nameof(Ip));
-            }
+            get => ip; set => SetProperty(ref ip, value);
+           
         }
 
         private string port;
         public string Port
         {
-            get { return port; }
-            set
-            {
-                port = value;
-                OnPropertyChanged(nameof(Port));
-            }
+            get => port; set => SetProperty(ref port, value);
         }
 
         private string udpContent;
         public string UdpContent
         {
-            get { return udpContent; }
-            set
-            {
-                udpContent = value;
-                OnPropertyChanged(nameof(UdpContent));
-            }
+            get => udpContent; set => SetProperty(ref udpContent, value);
         }
 
         private bool udpState;
         public bool UdpState
         {
-            get { return udpState; }
-            set
-            {
-                udpState = value;
-                OnPropertyChanged(nameof(UdpState));
-            }
+            get => udpState; set => SetProperty(ref udpState, value);
         }
 
 
         private RelayCommand _udpCommand;
         public RelayCommand UdpCommand
         {
-            get { return _udpCommand; }
-            set
-            {
-                _udpCommand = value;
-                OnPropertyChanged(nameof(UdpCommand));
-            }
+            get => _udpCommand; set => SetProperty(ref _udpCommand, value);
         }
 
         private UdpService udpService;
@@ -112,10 +88,6 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

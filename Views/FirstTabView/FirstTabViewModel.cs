@@ -3,13 +3,12 @@ using DED_MonitoringSensor.ViewModels;
 using DED_MonitoringSensor.ViewModels.Command;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace DED_MonitoringSensor.Views.FirstTabView
 {
-    class FirstTabViewModel : INotifyPropertyChanged
+    class FirstTabViewModel : ViewModelBase
     {
         public SerialViewModel SerialViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
@@ -30,23 +29,15 @@ namespace DED_MonitoringSensor.Views.FirstTabView
         private bool graphState;
         public bool GraphState
         {
-            get { return graphState; }
-            set
-            {
-                graphState = value;
-                OnPropertyChanged(nameof(GraphState));
-            }
+            get => graphState;
+            set => SetProperty(ref graphState, value);
         }
 
         private string graphContent;
         public string GraphContent
         {
-            get { return graphContent; }
-            set
-            {
-                graphContent = value;
-                OnPropertyChanged(nameof(GraphContent));
-            }
+            get => graphContent;
+            set => SetProperty(ref graphContent, value);
         }
 
         public RelayCommand GraphCommand { get; set; }
@@ -198,10 +189,6 @@ namespace DED_MonitoringSensor.Views.FirstTabView
             return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

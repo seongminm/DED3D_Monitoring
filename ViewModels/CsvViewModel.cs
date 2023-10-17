@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace DED_MonitoringSensor.ViewModels
 {
-    class CsvViewModel : INotifyPropertyChanged
+    class CsvViewModel : ViewModelBase
     {
         private CsvService csvService;
 
@@ -13,12 +13,7 @@ namespace DED_MonitoringSensor.ViewModels
         private bool csvState;
         public bool CsvState
         {
-            get { return csvState; }
-            set
-            {
-                csvState = value;
-                OnPropertyChanged(nameof(CsvState));
-            }
+            get => csvState; set => SetProperty(ref csvState, value);
         }
 
 
@@ -27,12 +22,7 @@ namespace DED_MonitoringSensor.ViewModels
         private RelayCommand _csvCommand;
         public RelayCommand CsvCommand
         {
-            get { return _csvCommand; }
-            set
-            {
-                _csvCommand = value;
-                OnPropertyChanged(nameof(CsvCommand));
-            }
+            get => _csvCommand; set => SetProperty(ref _csvCommand, value);
         }
 
         public CsvViewModel(string line)
@@ -62,11 +52,7 @@ namespace DED_MonitoringSensor.ViewModels
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+       
 
 
     }

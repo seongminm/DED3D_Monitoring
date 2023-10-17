@@ -5,72 +5,39 @@ using System.ComponentModel;
 
 namespace DED_MonitoringSensor.ViewModels
 {
-    class SerialViewModel : INotifyPropertyChanged
+    class SerialViewModel : ViewModelBase
     {
         private RelayCommand serialCommand;
         public RelayCommand SerialCommand
         {
-            get { return serialCommand; }
-            set
-            {
-                serialCommand = value;
-                OnPropertyChanged(nameof(SerialCommand));
-            }
+            get => serialCommand; set => SetProperty(ref serialCommand, value);
         }
         public RelayCommand SerialPortCommand { get; set; }
         private string _serialContent;
         public string SerialContent
         {
-            get { return _serialContent; }
-            set
-            {
-                _serialContent = value;
-                OnPropertyChanged(nameof(SerialContent));
-            }
+            get => _serialContent; set => SetProperty(ref _serialContent, value);
         }
         private bool _serialState;
         public bool SerialState
         {
-            get { return _serialState; }
-            set
-            {
-                _serialState = value;
-                OnPropertyChanged(nameof(SerialState));
-            }
+            get => _serialState; set => SetProperty(ref _serialState, value);
         }
         private string _selectedSerialPort;
         public string SelectedSerialPort
         {
-            get { return _selectedSerialPort; }
-            set
-            {
-                _selectedSerialPort = value;
-                OnPropertyChanged(nameof(SelectedSerialPort));
-            }
+            get => _selectedSerialPort; set => SetProperty(ref _selectedSerialPort, value);
         }
 
         private string _selectedSerialBaudRate;
         public string SelectedSerialBaudRate
         {
-            get { return _selectedSerialBaudRate; }
-            set
-            {
-                _selectedSerialBaudRate = value;
-                OnPropertyChanged(nameof(SelectedSerialBaudRate));
-            }
+            get => _selectedSerialBaudRate; set => SetProperty(ref _selectedSerialBaudRate, value);
         }
         private List<string> serialPorts;
         public List<string> SerialPorts
         {
-            get
-            {
-                return serialPorts;
-            }  
-            set
-            {
-                serialPorts = value;
-                OnPropertyChanged(nameof(SerialPorts));
-            }
+            get => serialPorts; set => SetProperty(ref serialPorts, value);
             
         }
         public List<int> SerialBaudRate { get; set; }
@@ -137,10 +104,5 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }
