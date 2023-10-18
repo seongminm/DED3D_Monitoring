@@ -3,13 +3,13 @@ using DED_MonitoringSensor.ViewModels;
 using DED_MonitoringSensor.ViewModels.Command;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Markup;
 
 namespace DED_MonitoringSensor.Views.SecondTabView
 {
-    class SecondTabViewModel : ViewModelBase
+    class SecondTabViewModel : ViewModelBase, IGetDataService
     {
         public UdpViewModel UdpViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
@@ -23,7 +23,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
         public CsvViewModel CsvViewModel { get; set; }
         public DatabaseViewModel DatabaseViewModel { get; set; }
-        public GetDataService getDataService;
 
 
 
@@ -44,7 +43,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
         public RelayCommand GraphClearCommand { get; set; }
 
         private double dataCount = 1;
-        private string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"visible1_avg"},{"visible1_std"},{"visible2_avg"},{"visible2_std"},{"visible3_avg"},{"visible3_std"},{"Sound_avg"},{"Sound_std"},{"Powder_avg"},{"Powder_std"}";
 
         private List<double> laserPower = new List<double>();
         private List<double> visible1 = new List<double>();
@@ -56,7 +54,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
         public SecondTabViewModel()
         {
             TimerViewModel = new TimerViewModel();
-            getDataService = new GetDataService();
 
             LaserPower = new OxyPlotViewModel("Laser Power");
             Visible1 = new OxyPlotViewModel("Visible1");
@@ -65,11 +62,11 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             Sound = new OxyPlotViewModel("Sound");
             Powder = new OxyPlotViewModel("Powder");
 
+            string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"visible1_avg"},{"visible1_std"},{"visible2_avg"},{"visible2_std"},{"visible3_avg"},{"visible3_std"},{"Sound_avg"},{"Sound_std"},{"Powder_avg"},{"Powder_std"}";
             CsvViewModel = new CsvViewModel(line);
             DatabaseViewModel = new DatabaseViewModel();
 
-            UdpViewModel = new UdpViewModel(TimerViewModel, getDataService);
-            getDataService.Method += DataReceived;
+            UdpViewModel = new UdpViewModel(TimerViewModel, this);
 
             GraphState = true;
             GraphContent = "Stop";
@@ -103,13 +100,26 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             }
         }
 
-        private void DataReceived()
+       
+        static string Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers)
         {
-            string data = getDataService.StringData;
-            string[] splitData = data.Split('/');
+            double mean = numbers.Average();
+            double sumOfSquaredDifferences = numbers.Sum(x => Math.Pow(x - mean, 2));
+            double standardDeviation = Math.Sqrt(sumOfSquaredDifferences / (numbers.Count - 1));
+
+            oxyplotViewModel.Output = Math.Round(mean, 2);
+            oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
+
+            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString() + "/";
+        }
+
+        public void GetData()
+        {
+            //string data = getDataService.StringData;
+            string[] splitData = UdpViewModel.GetData.Split('/');
             if (splitData.Length >= 7 && splitData.Length <= 8)
             {
-               
+
 
                 if (splitData[0].Equals("1"))
                 {
@@ -139,7 +149,7 @@ namespace DED_MonitoringSensor.Views.SecondTabView
                     calculatedData.Append(Calculate(Powder, powder));
 
                     string calculatedDataString = calculatedData.ToString();
-                   
+
                     LaserPower.GrpahUpdate(dataCount, GraphState);
                     Visible1.GrpahUpdate(dataCount, GraphState);
                     Visible2.GrpahUpdate(dataCount, GraphState);
@@ -170,20 +180,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
                     }
                 }
             }
-
         }
-        static string Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers)
-        {
-            double mean = numbers.Average();
-            double sumOfSquaredDifferences = numbers.Sum(x => Math.Pow(x - mean, 2));
-            double standardDeviation = Math.Sqrt(sumOfSquaredDifferences / (numbers.Count - 1));
-
-            oxyplotViewModel.Output = Math.Round(mean, 2);
-            oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
-
-            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString() + "/";
-        }
-
-        
     }
 }

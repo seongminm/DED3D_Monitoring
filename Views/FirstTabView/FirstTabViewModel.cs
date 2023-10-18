@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DED_MonitoringSensor.Views.FirstTabView
 {
-    class FirstTabViewModel : ViewModelBase
+    class FirstTabViewModel : ViewModelBase, IGetDataService
     {
         public SerialViewModel SerialViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
@@ -21,7 +21,6 @@ namespace DED_MonitoringSensor.Views.FirstTabView
         
         public CsvViewModel CsvViewModel { get; set; }
         public DatabaseViewModel DatabaseViewModel { get; set; }
-        public GetDataService getDataService;
 
         
 
@@ -44,7 +43,6 @@ namespace DED_MonitoringSensor.Views.FirstTabView
         public RelayCommand GraphClearCommand { get; set; }
 
         private double dataCount = 1;
-        private string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"visible1_avg"},{"visible1_std"},{"visible2_avg"},{"visible2_std"},{"visible3_avg"},{"visible3_std"},{"Sound_avg"},{"Sound_std"},{"Powder_avg"},{"Powder_std"}";
 
         private List<double> laserPower = new List<double>();
         private List<double> visible1 = new List<double>();
@@ -56,7 +54,6 @@ namespace DED_MonitoringSensor.Views.FirstTabView
         public FirstTabViewModel()
         {
             TimerViewModel = new TimerViewModel();
-            getDataService = new GetDataService();
 
             LaserPower = new OxyPlotViewModel("Laser Power");
             Visible1 = new OxyPlotViewModel("Visible1");
@@ -65,11 +62,11 @@ namespace DED_MonitoringSensor.Views.FirstTabView
             Sound = new OxyPlotViewModel("Sound");
             Powder = new OxyPlotViewModel("Powder");
 
+            string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"visible1_avg"},{"visible1_std"},{"visible2_avg"},{"visible2_std"},{"visible3_avg"},{"visible3_std"},{"Sound_avg"},{"Sound_std"},{"Powder_avg"},{"Powder_std"}";
             CsvViewModel = new CsvViewModel(line);
             DatabaseViewModel = new DatabaseViewModel();
 
-            SerialViewModel = new SerialViewModel(TimerViewModel, getDataService);
-            getDataService.Method += DataReceived;
+            SerialViewModel = new SerialViewModel(TimerViewModel, this);
 
             GraphState = true;
             GraphContent = "Stop";
@@ -103,12 +100,23 @@ namespace DED_MonitoringSensor.Views.FirstTabView
             }
         }
 
-        private void DataReceived()
+        static string Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers)
         {
+            double mean = numbers.Average();
+            double sumOfSquaredDifferences = numbers.Sum(x => Math.Pow(x - mean, 2));
+            double standardDeviation = Math.Sqrt(sumOfSquaredDifferences / (numbers.Count - 1));
 
-            string data = getDataService.StringData;
+            oxyplotViewModel.Output = Math.Round(mean, 2);
+            oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
+
+            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString();
+        }
+
+        public void GetData()
+        {
+            string data = SerialViewModel.GetData;
             string[] splitData = data.Split('/');
-            if(splitData.Length >= 7 && splitData.Length <= 8)
+            if (splitData.Length >= 7 && splitData.Length <= 8)
             {
 
                 if (splitData[0].Equals("1"))
@@ -175,20 +183,6 @@ namespace DED_MonitoringSensor.Views.FirstTabView
                     }
                 }
             }
-
         }
-        static string Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers)
-        {
-            double mean = numbers.Average();
-            double sumOfSquaredDifferences = numbers.Sum(x => Math.Pow(x - mean, 2));
-            double standardDeviation = Math.Sqrt(sumOfSquaredDifferences / (numbers.Count - 1));
-
-            oxyplotViewModel.Output = Math.Round(mean, 2);
-            oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
-
-            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString();
-        }
-
-        
     }
 }

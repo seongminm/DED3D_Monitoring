@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DED_MonitoringSensor.Views.FourthTabView
 {
-    class FourthTabViewModel : ViewModelBase
+    class FourthTabViewModel : ViewModelBase, IGetDataService
     {
         public UdpViewModel UdpViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
@@ -15,7 +15,7 @@ namespace DED_MonitoringSensor.Views.FourthTabView
         public RelayCommand Send1Command { get; set; }
         public RelayCommand Send2Command { get; set; }
 
-        public GetDataService getDataService;
+        
 
         private StringBuilder stringBuilder;
 
@@ -44,10 +44,10 @@ namespace DED_MonitoringSensor.Views.FourthTabView
         public FourthTabViewModel()
         {
             TimerViewModel = new TimerViewModel();
-            getDataService = new GetDataService();
+            
 
-            UdpViewModel = new UdpViewModel(TimerViewModel, getDataService);
-            getDataService.Method += DataReceived;
+            UdpViewModel = new UdpViewModel(TimerViewModel, this);
+            
 
             ClearCommand = new RelayCommand(Clear);
             Send1Command = new RelayCommand(SendUdp1);
@@ -86,22 +86,19 @@ namespace DED_MonitoringSensor.Views.FourthTabView
             TextBox2 = "";
         }
 
-        private void DataReceived()
+        public void GetData()
         {
-            stringBuilder.Append(getDataService.StringData);
-            if(stringBuilder.Length >= 10000)
+            stringBuilder.Append(UdpViewModel.GetData);
+            if (stringBuilder.Length >= 10000)
             {
                 int a = stringBuilder.Length - 10000;
-                
+
                 stringBuilder.Remove(0, a);
-                
+
                 Text = "The oldest data was removed... \n" + stringBuilder.ToString();
                 return;
-            } 
+            }
             Text = stringBuilder.ToString();
-           
         }
-
-        
     }
 }

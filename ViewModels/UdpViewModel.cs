@@ -1,12 +1,28 @@
 ﻿using DED_MonitoringSensor.Services;
 using DED_MonitoringSensor.ViewModels.Command;
+using System;
 using System.ComponentModel;
+using System.IO.Ports;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Windows;
 
 namespace DED_MonitoringSensor.ViewModels
 {
-
     class UdpViewModel : ViewModelBase
     {
+        UdpClient udpClient;
+
+        IGetDataService IGetDataService;
+
+        private string getData;
+        public string GetData
+        {
+            get => getData;
+            set => SetProperty(ref getData, value);
+        }
+
         private string ip;
         public string Ip
         {
@@ -32,6 +48,11 @@ namespace DED_MonitoringSensor.ViewModels
             get => udpState; set => SetProperty(ref udpState, value);
         }
 
+        private bool udpOpenState;
+        public bool UdpOpenState
+        {
+            get => udpOpenState; set => SetProperty(ref udpOpenState, value);
+        }
 
         private RelayCommand _udpCommand;
         public RelayCommand UdpCommand
@@ -39,27 +60,24 @@ namespace DED_MonitoringSensor.ViewModels
             get => _udpCommand; set => SetProperty(ref _udpCommand, value);
         }
 
-        private UdpService udpService;
-        private GetDataService getDataService;
-
         TimerViewModel timerViewModel;
 
-        public UdpViewModel(TimerViewModel timerViewModel, GetDataService getDataService)
+        public UdpViewModel(TimerViewModel timerViewModel, IGetDataService getDataService)
         {
-            this.getDataService = getDataService;
             this.timerViewModel = timerViewModel;
+            this.IGetDataService = getDataService;
 
-            udpService = new UdpService(this.getDataService);
             UdpCommand = new RelayCommand(OpenUdp);
 
             UdpState = true;
+            UdpOpenState = false;
             UdpContent = "Open";
         }
 
         private void OpenUdp()
         {
-            udpService.OpenUdp(Ip, Port);
-            if (udpService.udpState)
+            OpenUdp(Ip, Port);
+            if (UdpOpenState)
             {
                 UdpState = false;
                 UdpCommand = new RelayCommand(CloseUdp);
@@ -70,8 +88,18 @@ namespace DED_MonitoringSensor.ViewModels
 
         private void CloseUdp()
         {
-            udpService.CloseUdp();
-            if (!udpService.udpState)
+            try
+            {
+                udpClient.Close();
+                udpOpenState = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                udpOpenState = true;
+            }
+            
+            if (!UdpOpenState)
             {
                 UdpState = true;
                 UdpCommand = new RelayCommand(OpenUdp);
@@ -82,12 +110,52 @@ namespace DED_MonitoringSensor.ViewModels
 
         public void SendUdp(string message)
         {
-            if(udpService.udpState)
+            if(UdpOpenState)
             {
-                udpService.SendUdp(message);
+                byte[] data = Encoding.UTF8.GetBytes(message);
+                udpClient.Send(data, data.Length, ip, int.Parse(port));
             }
         }
 
-        
+
+        public void OpenUdp(string ip, string port)
+        {
+            try
+            {
+                this.ip = ip;
+                this.port = port;
+
+                udpClient = new UdpClient(int.Parse(port));
+
+                byte[] data = Encoding.UTF8.GetBytes("open");
+                udpClient.Send(data, data.Length, ip, int.Parse(port));
+
+                udpClient.BeginReceive(ReceiveCallback, null);
+                UdpOpenState = true;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                UdpOpenState = false;
+            }
+
+        }
+
+
+
+        private void ReceiveCallback(IAsyncResult ar)
+        {
+            if (UdpOpenState)
+            {
+                IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                byte[] receivedBytes = udpClient.EndReceive(ar, ref ipEndPoint);
+                GetData = Encoding.UTF8.GetString(receivedBytes); // 바이트 배열을 문자열로 변환               
+                IGetDataService.GetData();
+                udpClient.BeginReceive(ReceiveCallback, null); // 계속해서 데이터 수신 대기
+            }
+        }
     }
+
 }
+

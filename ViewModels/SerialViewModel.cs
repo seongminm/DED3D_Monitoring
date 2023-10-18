@@ -1,81 +1,108 @@
 ﻿using DED_MonitoringSensor.Services;
 using DED_MonitoringSensor.ViewModels.Command;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO.Ports;
+using System.Windows;
 
 namespace DED_MonitoringSensor.ViewModels
 {
     class SerialViewModel : ViewModelBase
     {
+        SerialPort serialPort;
+        IGetDataService IGetDataService;
+
         private RelayCommand serialCommand;
         public RelayCommand SerialCommand
         {
-            get => serialCommand; set => SetProperty(ref serialCommand, value);
+            get => serialCommand;
+            set => SetProperty(ref serialCommand, value);
+
         }
         public RelayCommand SerialPortCommand { get; set; }
-        private string _serialContent;
-        public string SerialContent
+
+        private string getData;
+        public string GetData
         {
-            get => _serialContent; set => SetProperty(ref _serialContent, value);
-        }
-        private bool _serialState;
-        public bool SerialState
-        {
-            get => _serialState; set => SetProperty(ref _serialState, value);
-        }
-        private string _selectedSerialPort;
-        public string SelectedSerialPort
-        {
-            get => _selectedSerialPort; set => SetProperty(ref _selectedSerialPort, value);
+            get => getData;
+            set => SetProperty(ref getData, value);
         }
 
-        private string _selectedSerialBaudRate;
+        private string serialContent;
+        public string SerialContent
+        {
+            get => serialContent;
+            set => SetProperty(ref serialContent, value);
+        }
+
+        private bool serialState;
+        public bool SerialState
+        {
+            get => serialState;
+            set => SetProperty(ref serialState, value);
+        }
+
+        private string selectedSerialPort;
+        public string SelectedSerialPort
+        {
+            get => selectedSerialPort;
+            set => SetProperty(ref selectedSerialPort, value);
+        }
+
+        private string selectedSerialBaudRate;
         public string SelectedSerialBaudRate
         {
-            get => _selectedSerialBaudRate; set => SetProperty(ref _selectedSerialBaudRate, value);
+            get => selectedSerialBaudRate;
+            set => SetProperty(ref selectedSerialBaudRate, value);
         }
         private List<string> serialPorts;
         public List<string> SerialPorts
         {
-            get => serialPorts; set => SetProperty(ref serialPorts, value);
-            
+            get => serialPorts;
+            set => SetProperty(ref serialPorts, value);
+
         }
         public List<int> SerialBaudRate { get; set; }
 
-
-        private SerialService serialService;
-        private GetDataService getDataService;
-
         TimerViewModel timerViewModel;
 
-        public SerialViewModel(TimerViewModel timerViewModel, GetDataService getDataService)
+        public SerialViewModel(TimerViewModel timerViewModel, IGetDataService getDataService)
         {
 
-            this.getDataService = getDataService;
             this.timerViewModel = timerViewModel;
+            this.IGetDataService = getDataService;
 
-            serialService = new SerialService(this.getDataService);
             SerialCommand = new RelayCommand(OpenSerial);
-            
+
             SerialContent = "Open";
             SerialState = true;
-            SerialPorts = serialService.SerialPorts;
-            SerialBaudRate = serialService.SerialBaudRate;
+            SerialPorts = new List<string>(SerialPort.GetPortNames());
+            SerialBaudRate = new List<int> { 9600, 14400, 19200, 38400, 57600, 115200 };
             SerialPortCommand = new RelayCommand(LoadSerial);
 
         }
 
         private void LoadSerial()
         {
-            serialService.LoadSerialPorts();
-            SerialPorts = serialService.SerialPorts;
+            SerialPorts = new List<string>(SerialPort.GetPortNames());
         }
 
         private void OpenSerial()
         {
+            try
+            {
+                serialPort = new SerialPort();
+                serialPort.PortName = SelectedSerialPort;
+                serialPort.BaudRate = int.Parse(SelectedSerialBaudRate);
+                serialPort.DataReceived += SerialPort_DataReceived;
+                serialPort.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            serialService.OpenSerial(SelectedSerialPort, SelectedSerialBaudRate);
-            if (serialService.isOpen())
+            if (serialPort.IsOpen)
             {
                 SerialCommand = new RelayCommand(CloseSerial);
                 SerialContent = "Close";
@@ -86,8 +113,20 @@ namespace DED_MonitoringSensor.ViewModels
 
         public void CloseSerial()
         {
-            serialService.CloseSerial();
-            if (!serialService.isOpen())
+            serialPort.DiscardInBuffer();
+            serialPort.DataReceived -= SerialPort_DataReceived;
+            try
+            {
+                serialPort.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+
+            if (!serialPort.IsOpen)
             {
                 SerialCommand = new RelayCommand(OpenSerial);
                 SerialContent = "Open";
@@ -98,10 +137,25 @@ namespace DED_MonitoringSensor.ViewModels
 
         public void SendSerial(string message)
         {
-            if(serialService.isOpen())
+            if (serialPort.IsOpen)
             {
-                serialService.SendSerial(message);
+                serialPort.WriteLine(message);
             }
+        }
+
+
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                GetData = serialPort.ReadLine();
+                IGetDataService.GetData();
+            }
+            catch
+            {
+                return;
+            }
+
         }
 
     }
