@@ -6,18 +6,20 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   static uint32_t started = 0;
-  float vol[5];
+  float vol[8];
   String data;
-  for(int i = 0; i < 5; i++) {
-    vol[i] =  analogRead(i) * 3.3 / 1024.0;
+  if (millis() - started >= 1000) {
+    data = "0/";
+    started = millis();
+  } else {
+    data = "1/";
+  }
+
+  for (int i = 0; i < 8; i++) {
+    vol[i] = analogRead(i) * 3.3 / 1024.0;
     data += String(vol[i]) + "/";
   }
-  data += '\n';
-  Serial.print(data);
+  data += "\n";
 
-  if(millis() - started >= 1000) {
-    Serial.print("end! \n");
-    started = millis();
-  }
-  
+  Serial.print(data);
 }
