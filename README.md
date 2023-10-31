@@ -2,12 +2,13 @@
 이 리포지스토리는 DED 방식 3D 프린터에 부착되는 센서 모너티렁을 위한 리포지스토리입니다.
 
 ## Contents 
-- [소개](https://github.com/37inm/DED_Monitoring#%EC%86%8C%EA%B0%9C)
-- [개발환경](https://github.com/37inm/DED_Monitoring#%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD)
+- 소개
+- 개발환경
 
 ## 소개
 > DED 3D 프린터에 부착하여 최적 공정 조건을 찾기 위해 제작되었습니다.
-<img src="https://github.com/37inm/DED_Monitoring/assets/131761210/407c2736-e759-4387-a3c7-2b55fe65edf8" width="600"/>
+
+<img src="https://github.com/37inm/DED3D_Monitoring/assets/131761210/e50f34ee-d230-458a-9025-a12ff44540ab" width="600"/>
 <img src="https://github.com/37inm/DED_Monitoring/assets/131761210/2248f48d-3161-4f3d-afc2-72809035da6b" width="600"/>
 
 이 프로그램은 직접 개발한 센서 모듈과 UART, UDP 통신을 통해 실시간으로 데이터를 확인 할 수 있는 유틸리티 프로그램입니다.
