@@ -13,7 +13,7 @@
 이 프로그램은 직접 개발한 센서 모듈과 UART, UDP 통신을 통해 실시간으로 데이터를 확인 할 수 있는 유틸리티 프로그램입니다.
 
 <img src="https://github.com/37inm/DED3D_Monitoring/assets/131761210/e2b4d4b5-2730-4668-b320-6a26a811fb84" width="600" height="600"/>
-<img src="https://github.com/37inm/DED3D_Monitoring/assets/131761210/6cc42dc4-d503-47f7-898d-2aa54a7149af" width="600" height="600"/>
+<img src="https://github.com/37inm/DED3D_Monitoring/assets/131761210/6cc42dc4-d503-47f7-898d-2aa54a7149af" width="600"/>
 
 csv파일 형식, MySQL 데이터베이스에 실시간 평균값, 표준편차 데이터를 저장할 수 있는 기능을 제공합니다.
 
