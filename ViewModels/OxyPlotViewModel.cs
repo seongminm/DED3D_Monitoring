@@ -2,6 +2,7 @@
 using OxyPlot;
 using System.ComponentModel;
 using DED_MonitoringSensor.ViewModels;
+using OxyPlot.Axes;
 
 namespace DED_MonitoringSensor.Views
 {
@@ -30,6 +31,24 @@ namespace DED_MonitoringSensor.Views
             linePlotModel = new LineSeries();
 
             PlotModel.Series.Add(linePlotModel);
+
+        }
+
+        public OxyPlotViewModel(string title, double min, double max)
+        {
+            PlotModel = new PlotModel { Title = title, TitleFontSize = 11 };
+            linePlotModel = new LineSeries();
+
+            PlotModel.Series.Add(linePlotModel);
+
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Minimum = min,
+                Maximum = max
+            };
+
+            PlotModel.Axes.Add(yAxis);
 
         }
 

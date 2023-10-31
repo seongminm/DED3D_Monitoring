@@ -99,16 +99,20 @@ namespace DED_MonitoringSensor.ViewModels
                     "`Time` VARCHAR(45) NULL, " +
                     "`LaserPower_avg` VARCHAR(45) NULL, " +
                     "`LaserPower_std` VARCHAR(45) NULL, " +
-                    "`visible1_avg` VARCHAR(45) NULL, " +
-                    "`visible1_std` VARCHAR(45) NULL, " +
-                    "`visible2_avg` VARCHAR(45) NULL, " +
-                    "`visible2_std` VARCHAR(45) NULL, " +
-                    "`visible3_avg` VARCHAR(45) NULL, " +
-                    "`visible3_std` VARCHAR(45) NULL, " +
+                    "`Visible_avg` VARCHAR(45) NULL, " +
+                    "`Visible_std` VARCHAR(45) NULL, " +
+                    "`IRFilter_avg` VARCHAR(45) NULL, " +
+                    "`IRFilter_std` VARCHAR(45) NULL, " +
+                    "`BlueFilter_avg` VARCHAR(45) NULL, " +
+                    "`BlueFilter_std` VARCHAR(45) NULL, " +
                     "`Sound_avg` VARCHAR(45) NULL, " +
                     "`Sound_std` VARCHAR(45) NULL, " +
-                    "`Powder_avg` VARCHAR(45) NULL, " +
-                    "`Powder_std` VARCHAR(45) NULL, " +
+                    "`Powder980_avg` VARCHAR(45) NULL, " +
+                    "`Powder980_std` VARCHAR(45) NULL, " +
+                    "`Powder780_avg` VARCHAR(45) NULL, " +
+                    "`Powder780_std` VARCHAR(45) NULL, " +
+                    "`Powder650_avg` VARCHAR(45) NULL, " +
+                    "`Powder650_std` VARCHAR(45) NULL, " +
                     "PRIMARY KEY (`Pk`));";
 
                 connection.Open();
@@ -130,23 +134,27 @@ namespace DED_MonitoringSensor.ViewModels
         {
             string[] splitData = data.Split('/');
 
-            string insertDataQuery = "INSERT INTO " + tableName + " (Time, LaserPower_avg, LaserPower_std, visible1_avg, visible1_std, visible2_avg, visible2_std, visible3_avg, visible3_std, Sound_avg, Sound_std, Powder_avg, Powder_std)" +
-                        "VALUES (@Time, @LaserPower_avg, @LaserPower_std, @visible1_avg, @visible1_std, @visible2_avg, @visible2_std, @visible3_avg, @visible3_std, @Sound_avg, @Sound_std, @Powder_avg, @Powder_std);";
+            string insertDataQuery = "INSERT INTO " + tableName + " (Time, LaserPower_avg, LaserPower_std, Visible_avg, Visible_std, IRFilter_avg, IRFilter_std, BlueFilter_avg, BlueFilter_std, Sound_avg, Sound_std, Powder980_avg, Powder980_std, Powder780_avg, Powder780_std, Powder650_avg, Powder650_std)" +
+                        "VALUES (@Time, @LaserPower_avg, @LaserPower_std, @Visible_avg, @Visible_std, @IRFilter_avg, @IRFilter_std, @BlueFilter_avg, @BlueFilter_std, @Sound_avg, @Sound_std, @Powder980_avg, @Powder980_std, @Powder780_avg, @Powder780_std, @Powder650_avg, @Powder650_std);";
             MySqlCommand insertDataCommand = new MySqlCommand(insertDataQuery, connection);
 
             insertDataCommand.Parameters.AddWithValue("@Time", timer);
             insertDataCommand.Parameters.AddWithValue("@LaserPower_avg", splitData[0]);
             insertDataCommand.Parameters.AddWithValue("@LaserPower_std", splitData[1]);
-            insertDataCommand.Parameters.AddWithValue("@visible1_avg", splitData[2]);
-            insertDataCommand.Parameters.AddWithValue("@visible1_std", splitData[3]);
-            insertDataCommand.Parameters.AddWithValue("@visible2_avg", splitData[4]);
-            insertDataCommand.Parameters.AddWithValue("@visible2_std", splitData[5]);
-            insertDataCommand.Parameters.AddWithValue("@visible3_avg", splitData[6]);
-            insertDataCommand.Parameters.AddWithValue("@visible3_std", splitData[7]);
+            insertDataCommand.Parameters.AddWithValue("@Visible_avg", splitData[2]);
+            insertDataCommand.Parameters.AddWithValue("@Visible_std", splitData[3]);
+            insertDataCommand.Parameters.AddWithValue("@IRFilter_avg", splitData[4]);
+            insertDataCommand.Parameters.AddWithValue("@IRFilter_std", splitData[5]);
+            insertDataCommand.Parameters.AddWithValue("@BlueFilter_avg", splitData[6]);
+            insertDataCommand.Parameters.AddWithValue("@BlueFilter_std", splitData[7]);
             insertDataCommand.Parameters.AddWithValue("@Sound_avg", splitData[8]);
             insertDataCommand.Parameters.AddWithValue("@Sound_std", splitData[9]);
-            insertDataCommand.Parameters.AddWithValue("@Powder_avg", splitData[10]);
-            insertDataCommand.Parameters.AddWithValue("@Powder_std", splitData[11]);
+            insertDataCommand.Parameters.AddWithValue("@Powder980_avg", splitData[10]);
+            insertDataCommand.Parameters.AddWithValue("@Powder980_std", splitData[11]);
+            insertDataCommand.Parameters.AddWithValue("@Powder780_avg", splitData[12]);
+            insertDataCommand.Parameters.AddWithValue("@Powder780_std", splitData[13]);
+            insertDataCommand.Parameters.AddWithValue("@Powder650_avg", splitData[14]);
+            insertDataCommand.Parameters.AddWithValue("@Powder650_std", splitData[15]);
             insertDataCommand.ExecuteNonQuery();
         }
 

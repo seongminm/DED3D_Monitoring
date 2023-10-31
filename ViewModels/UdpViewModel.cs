@@ -90,8 +90,8 @@ namespace DED_MonitoringSensor.ViewModels
         {
             try
             {
-                udpClient.Close();
                 udpOpenState = false;
+                udpClient.Close();
             }
             catch(Exception ex)
             {
