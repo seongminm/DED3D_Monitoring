@@ -124,7 +124,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
         public void GetData()
         {
-            //string data = getDataService.StringData;
             string[] splitData = UdpViewModel.GetData.Split('/');
             if (splitData.Length >= 9 && splitData.Length <= 10)
             {
