@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {
   static uint32_t started = 0;
-  float vol[6];
+  float vol[8];
   if(Serial.available()) {
     Serial.read();
     Serial.println(WiFi.localIP());
@@ -45,12 +45,12 @@ void loop() {
     data = "1/";
   }
 
-  for (int i = 0; i < 6; i++) {
+  for (int i = 0; i < 8; i++) {
     vol[i] = analogRead(i) * 3.3 / 1024.0;
     data += String(vol[i]) + "/";
   }
   data += "\n";
-  // data = startBit / visible1 / visible2 / visible3/ powder/ sound / laserPower 
+ 
   int packetSize = Udp.parsePacket();
   if (packetSize) {
     ip = Udp.remoteIP();
