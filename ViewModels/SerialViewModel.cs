@@ -113,10 +113,11 @@ namespace DED_MonitoringSensor.ViewModels
 
         public void CloseSerial()
         {
-            serialPort.DiscardInBuffer();
-            serialPort.DataReceived -= SerialPort_DataReceived;
+            
             try
             {
+                serialPort.DiscardInBuffer();
+                serialPort.DataReceived -= SerialPort_DataReceived;
                 serialPort.Close();
 
             }
