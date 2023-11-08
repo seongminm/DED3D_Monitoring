@@ -77,7 +77,7 @@
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Sound.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
                     <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Sound.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="3" Grid.Column="0" Content="Visible" FontWeight="Bold"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Visible Light" FontWeight="Bold"/>
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Visible.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Visible.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 

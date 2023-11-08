@@ -60,7 +60,7 @@ namespace DED_MonitoringSensor.Views.FirstTabView
             TimerViewModel = new TimerViewModel();
 
             LaserPower = new OxyPlotViewModel("Laser Power", 0, 3.4);
-            Visible = new OxyPlotViewModel("Visible", 0, 3.4);
+            Visible = new OxyPlotViewModel("Visible Light", 0, 3.4);
             IrFilter = new OxyPlotViewModel("IR_Filter", 0, 3.4);
             BlueFilter = new OxyPlotViewModel("Blue_Filter", 0, 3.4);
             Sound = new OxyPlotViewModel("Sound", 0, 3.4);
