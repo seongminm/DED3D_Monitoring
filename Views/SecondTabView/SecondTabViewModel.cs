@@ -58,14 +58,14 @@ namespace DED_MonitoringSensor.Views.SecondTabView
         {
             TimerViewModel = new TimerViewModel();
 
-            LaserPower = new OxyPlotViewModel("Laser Power");
-            Visible = new OxyPlotViewModel("Visible", 0, 3.3);
-            IrFilter = new OxyPlotViewModel("IR_Filter", 0, 3.3);
-            BlueFilter = new OxyPlotViewModel("Blue_Filter", 0, 3.3);
-            Sound = new OxyPlotViewModel("Sound", 0, 3.3);
-            Powder980 = new OxyPlotViewModel("980nm-Powder", 0, 3.3);
-            Powder780 = new OxyPlotViewModel("780nm-Powder", 0, 3.3);
-            Powder650 = new OxyPlotViewModel("650nm-Powder", 0, 3.3);
+            LaserPower = new OxyPlotViewModel("Laser Power", 0, 3.4);
+            Visible = new OxyPlotViewModel("Visible", 0, 3.4);
+            IrFilter = new OxyPlotViewModel("IR_Filter", 0, 3.4);
+            BlueFilter = new OxyPlotViewModel("Blue_Filter", 0, 3.4);
+            Sound = new OxyPlotViewModel("Sound", 0, 3.4);
+            Powder980 = new OxyPlotViewModel("980nm-Powder", 0, 3.4);
+            Powder780 = new OxyPlotViewModel("780nm-Powder", 0, 3.4);
+            Powder650 = new OxyPlotViewModel("650nm-Powder", 0, 3.4);
 
             string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"Visible_avg"},{"Visible_std"}," +
                             $"{"IRFilter_avg"},{"IRFilter_std"},{"BlueFilter_avg"},{"BuleFilter_std"}," +
@@ -97,7 +97,7 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
         private void GraphToggle()
         {
-            if (GraphState)
+            if (GraphState) 
             {
                 GraphState = !GraphState;
                 GraphContent = "Live";

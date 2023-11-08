@@ -6,7 +6,7 @@
              xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
              xmlns:local="clr-namespace:DED_MonitoringSensor.Views.SecondTabView"
              mc:Ignorable="d" 
-             d:DesignHeight="832" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.DataContext>
         <local:SecondTabViewModel/>
     </UserControl.DataContext>
@@ -69,37 +69,37 @@
                     <Label Grid.Row="0" Grid.Column="1" Content="Average" FontWeight="Bold"/>
                     <Label Grid.Row="0" Grid.Column="2" Content="Deviation" FontWeight="Bold"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="Visible" FontWeight="Bold"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Visible.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Visible.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Laser Power" VerticalAlignment="Center" Height="26" Margin="0,3,0,2" FontWeight="Bold"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LaserPower.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding LaserPower.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="IR-Filter" FontWeight="Bold"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IrFilter.Output}"  VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding IrFilter.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Sound" FontWeight="Bold" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Sound.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Sound.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="3" Grid.Column="0" Content="Blue-Filter" FontWeight="Bold"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding BlueFilter.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding BlueFilter.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Visible" FontWeight="Bold"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Visible.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Visible.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="4" Grid.Column="0" Content="Powder-980" FontWeight="Bold"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Powder980.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Powder980.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="IR-Filter" FontWeight="Bold"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding IrFilter.Output}"  VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding IrFilter.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="5" Grid.Column="0" Content="Powder-780" FontWeight="Bold"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Powder780.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Powder780.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="Blue-Filter" FontWeight="Bold"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding BlueFilter.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding BlueFilter.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="6" Grid.Column="0" Content="Powder-650" FontWeight="Bold"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Powder650.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Powder650.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="Powder-980" FontWeight="Bold"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Powder980.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Powder980.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="7" Grid.Column="0" Content="Sound" FontWeight="Bold" />
-                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Sound.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="7" Grid.Column="2" Text="{Binding Sound.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="Powder-780" FontWeight="Bold"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Powder780.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="7" Grid.Column="2" Text="{Binding Powder780.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
 
-                    <Label Grid.Row="8" Grid.Column="0" Content="Laser Power" VerticalAlignment="Center" Height="26" Margin="0,3,0,2" FontWeight="Bold"/>
-                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LaserPower.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
-                    <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding LaserPower.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <Label Grid.Row="8" Grid.Column="0" Content="Powder-650" FontWeight="Bold"/>
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Powder650.Output}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
+                    <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding Powder650.Std}" VerticalAlignment="Center" HorizontalContentAlignment="Right" Margin="8,0,8,0" IsReadOnly="True" BorderThickness="2,2,1,1"/>
                 </Grid>
             </Border>
             <Grid Grid.Column="1">
@@ -107,21 +107,20 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <oxy:PlotView Model="{Binding Visible.PlotModel}" Grid.Row="0" Grid.Column="0" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding IrFilter.PlotModel}" Grid.Row="0" Grid.Column="1" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding BlueFilter.PlotModel}" Grid.Row="0" Grid.Column="2" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding Powder980.PlotModel}" Grid.Row="1" Grid.Column="0" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding Powder780.PlotModel}" Grid.Row="1" Grid.Column="1" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding Powder650.PlotModel}" Grid.Row="1" Grid.Column="2" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding Sound.PlotModel}" Grid.Row="2" Grid.Column="0" IsMouseWheelEnabled="False"/>
-                <oxy:PlotView Model="{Binding LaserPower.PlotModel}" Grid.Row="2" Grid.Column="1" IsMouseWheelEnabled="False"/>
-
+                <oxy:PlotView Model="{Binding LaserPower.PlotModel}" Grid.Row="0" Grid.Column="0" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding Visible.PlotModel}" Grid.Row="0" Grid.Column="1" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding IrFilter.PlotModel}" Grid.Row="0" Grid.Column="2" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding BlueFilter.PlotModel}" Grid.Row="0" Grid.Column="3" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding Sound.PlotModel}" Grid.Row="1" Grid.Column="0" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding Powder980.PlotModel}" Grid.Row="1" Grid.Column="1" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding Powder780.PlotModel}" Grid.Row="1" Grid.Column="2" IsMouseWheelEnabled="False"/>
+                <oxy:PlotView Model="{Binding Powder650.PlotModel}" Grid.Row="1" Grid.Column="3" IsMouseWheelEnabled="False"/>
             </Grid>
         </Grid>
     </Grid>

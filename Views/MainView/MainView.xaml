@@ -9,7 +9,7 @@
         xmlns:local3="clr-namespace:DED_MonitoringSensor.Views.ThirdTabView"
         xmlns:local4="clr-namespace:DED_MonitoringSensor.Views.FourthTabView"
         mc:Ignorable="d"
-        Title="DED Monitoring Sesnor" Height="832" Width="800" MinHeight="832" MinWidth="800" >
+        Title="DED Monitoring Sesnor" Height="600" Width="900">
     <Grid>
         <TabControl Margin="5">
             <TabItem Header="Serial Chart">
