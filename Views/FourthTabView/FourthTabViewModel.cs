@@ -86,9 +86,9 @@ namespace DED_MonitoringSensor.Views.FourthTabView
             TextBox2 = "";
         }
 
-        public void GetData()
+        public void GetData(string getData)
         {
-            stringBuilder.Append(UdpViewModel.GetData);
+            stringBuilder.Append(getData);
             if (stringBuilder.Length >= 10000)
             {
                 int a = stringBuilder.Length - 10000;

@@ -67,10 +67,11 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             Powder780 = new OxyPlotViewModel("780nm-Powder", 0, 3.4);
             Powder650 = new OxyPlotViewModel("650nm-Powder", 0, 3.4);
 
-            string line = $"{"Time"},{"LaserPower_avg"},{"LaserPower_std"},{"Visible_avg"},{"Visible_std"}," +
-                            $"{"IRFilter_avg"},{"IRFilter_std"},{"BlueFilter_avg"},{"BuleFilter_std"}," +
-                            $"{"Sound_avg"},{"Sound_std"}," +
-                            $"{"Powder980_avg"},{"Powder980_std"},{"Powder780_avg"},{"Powder780_std"},{"Powder650_avg"},{"Powder650_std"}"; CsvViewModel = new CsvViewModel(line);
+            string line = $"{"Time"},{"LaserPower"},{"Visible"}," +
+                $"{"IRFilter"},{"BlueFilter"}," +
+                $"{"Sound"}," +
+                $"{"Powder980"},{"Powder780"},{"Powder650"}";
+            CsvViewModel = new CsvViewModel(line);
             DatabaseViewModel = new DatabaseViewModel();
 
             UdpViewModel = new UdpViewModel(TimerViewModel, this);
@@ -109,8 +110,7 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             }
         }
 
-       
-        static string Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers)
+        static void Calculate(OxyPlotViewModel oxyplotViewModel, List<double> numbers, double dataCount, bool graphState)
         {
             double mean = numbers.Average();
             double sumOfSquaredDifferences = numbers.Sum(x => Math.Pow(x - mean, 2));
@@ -119,85 +119,75 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             oxyplotViewModel.Output = Math.Round(mean, 2);
             oxyplotViewModel.Std = Math.Round(standardDeviation, 2);
 
-            return oxyplotViewModel.Output.ToString() + "/" + oxyplotViewModel.Std.ToString() + "/";
+            oxyplotViewModel.GrpahUpdate(dataCount, graphState);
+            numbers.Clear();
         }
 
-        public void GetData()
+        public void GetData(string getData)
         {
-            string[] splitData = UdpViewModel.GetData.Split('/');
-            if (splitData.Length >= 9 && splitData.Length <= 10)
+
+            string[] stringSplitData = getData.Split('/');
+
+
+            if (stringSplitData.Length >= 9 && stringSplitData.Length <= 10)
             {
-
-
-                if (splitData[0].Equals("1"))
+                double[] splitdata = new double[8];
+                for (int i = 0; i < 8; i++)
                 {
-                    visible.Add(double.Parse(splitData[1]));
-                    irFilter.Add(double.Parse(splitData[2]));
-                    blueFilter.Add(double.Parse(splitData[3]));
-                    powder980.Add(double.Parse(splitData[4]));
-                    sound.Add(double.Parse(splitData[5]));
-                    laserPower.Add(double.Parse(splitData[6]));
-                    powder780.Add(double.Parse(splitData[7]));
-                    powder650.Add(double.Parse(splitData[8]));
+                    splitdata[i] = double.Parse(stringSplitData[i + 1]) * 0.0001;
+                }
+
+                if (stringSplitData[0].Equals("1"))
+                {
+                    visible.Add(splitdata[0]);
+                    irFilter.Add(splitdata[1]);
+                    blueFilter.Add(splitdata[2]);
+                    powder980.Add(splitdata[3]);
+                    sound.Add(splitdata[4]);
+                    laserPower.Add(splitdata[5]);
+                    powder780.Add(splitdata[6]);
+                    powder650.Add(splitdata[7]);
 
                 }
-                else if (splitData[0].Equals("0") && laserPower.Count != 0)
+                else if (stringSplitData[0].Equals("0") && laserPower.Count != 0)
                 {
-                    visible.Add(double.Parse(splitData[1]));
-                    irFilter.Add(double.Parse(splitData[2]));
-                    blueFilter.Add(double.Parse(splitData[3]));
-                    powder980.Add(double.Parse(splitData[4]));
-                    sound.Add(double.Parse(splitData[5]));
-                    laserPower.Add(double.Parse(splitData[6]));
-                    powder780.Add(double.Parse(splitData[7]));
-                    powder650.Add(double.Parse(splitData[8]));
+                    visible.Add(splitdata[0]);
+                    irFilter.Add(splitdata[1]);
+                    blueFilter.Add(splitdata[2]);
+                    powder980.Add(splitdata[3]);
+                    sound.Add(splitdata[4]);
+                    laserPower.Add(splitdata[5]);
+                    powder780.Add(splitdata[6]);
+                    powder650.Add(splitdata[7]);
 
-                    StringBuilder calculatedData = new StringBuilder();
-                    calculatedData.Append(Calculate(LaserPower, laserPower));
-                    calculatedData.Append(Calculate(Visible, visible));
-                    calculatedData.Append(Calculate(IrFilter, irFilter));
-                    calculatedData.Append(Calculate(BlueFilter, blueFilter));
-                    calculatedData.Append(Calculate(Sound, sound));
-                    calculatedData.Append(Calculate(Powder980, powder980));
-                    calculatedData.Append(Calculate(Powder780, powder780));
-                    calculatedData.Append(Calculate(Powder650, powder650));
-
-                    string calculatedDataString = calculatedData.ToString();
-
-                    LaserPower.GrpahUpdate(dataCount, GraphState);
-                    Visible.GrpahUpdate(dataCount, GraphState);
-                    IrFilter.GrpahUpdate(dataCount, GraphState);
-                    BlueFilter.GrpahUpdate(dataCount, GraphState);
-                    Sound.GrpahUpdate(dataCount, GraphState);
-                    Powder980.GrpahUpdate(dataCount, GraphState);
-                    Powder780.GrpahUpdate(dataCount, GraphState);
-                    Powder650.GrpahUpdate(dataCount, GraphState);
+                    Calculate(LaserPower, laserPower, dataCount, GraphState);
+                    Calculate(Visible, visible, dataCount, GraphState);
+                    Calculate(IrFilter, irFilter, dataCount, GraphState);
+                    Calculate(BlueFilter, blueFilter, dataCount, GraphState);
+                    Calculate(Sound, sound, dataCount, GraphState);
+                    Calculate(Powder980, powder980, dataCount, GraphState);
+                    Calculate(Powder780, powder780, dataCount, GraphState);
+                    Calculate(Powder650, powder650, dataCount, GraphState);
 
                     dataCount++;
+                }
 
-                    laserPower.Clear();
-                    visible.Clear();
-                    irFilter.Clear();
-                    blueFilter.Clear();
-                    sound.Clear();
-                    powder980.Clear();
-                    powder780.Clear();
-                    powder650.Clear();
-
+                if (CsvViewModel.CsvState)
+                {
                     DateTime currentTime = DateTime.Now;
                     string formattedTime = currentTime.ToString("yy/MM/dd HH:mm:ss");
-
-                    if (CsvViewModel.CsvState)
-                    {
-                        CsvViewModel.Add(formattedTime, calculatedDataString);
-                    }
-
-                    if (DatabaseViewModel.MysqlState)
-                    {
-                        DatabaseViewModel.AddDatabase(formattedTime, calculatedDataString);
-                    }
+                    CsvViewModel.Add(formattedTime, splitdata);
                 }
+
+                if (DatabaseViewModel.MysqlState)
+                {
+                    DateTime currentTime = DateTime.Now;
+                    string formattedTime = currentTime.ToString("yy/MM/dd HH:mm:ss");
+                    DatabaseViewModel.AddDatabase(formattedTime, splitdata);
+                }
+
             }
         }
+    
     }
 }

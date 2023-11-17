@@ -77,9 +77,23 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-        public void AddDatabase(string timer, string data)
+        public void AddDatabase(string timer, double[] dataArray)
         {
-            AddData(timer, data);
+            string insertDataQuery = "INSERT INTO " + tableName + " (Time, LaserPower, Visible, IRFilter, BlueFilter, Sound, Powder980, Powder780, Powder650)" +
+                        "VALUES (@Time, @LaserPower, @Visible, @IRFilter, @BlueFilter, @Sound, @Powder980, @Powder780, @Powder650);";
+            MySqlCommand insertDataCommand = new MySqlCommand(insertDataQuery, connection);
+
+            insertDataCommand.Parameters.AddWithValue("@Time", timer);
+            insertDataCommand.Parameters.AddWithValue("@LaserPower", dataArray[0]);
+            insertDataCommand.Parameters.AddWithValue("@Visible", dataArray[1]);
+            insertDataCommand.Parameters.AddWithValue("@IRFilter", dataArray[2]);
+            insertDataCommand.Parameters.AddWithValue("@BlueFilter", dataArray[3]);
+            insertDataCommand.Parameters.AddWithValue("@Sound", dataArray[4]);
+            insertDataCommand.Parameters.AddWithValue("@Powder980", dataArray[5]);
+            insertDataCommand.Parameters.AddWithValue("@Powder780", dataArray[6]);
+            insertDataCommand.Parameters.AddWithValue("@Powder650", dataArray[7]);
+            insertDataCommand.ExecuteNonQuery();
+
         }
 
 
@@ -97,22 +111,14 @@ namespace DED_MonitoringSensor.ViewModels
                 connection = new MySqlConnection(connectionString);
                 string createTableQuery = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (`Pk` INT NOT NULL AUTO_INCREMENT, " +
                     "`Time` VARCHAR(45) NULL, " +
-                    "`LaserPower_avg` VARCHAR(45) NULL, " +
-                    "`LaserPower_std` VARCHAR(45) NULL, " +
-                    "`Visible_avg` VARCHAR(45) NULL, " +
-                    "`Visible_std` VARCHAR(45) NULL, " +
-                    "`IRFilter_avg` VARCHAR(45) NULL, " +
-                    "`IRFilter_std` VARCHAR(45) NULL, " +
-                    "`BlueFilter_avg` VARCHAR(45) NULL, " +
-                    "`BlueFilter_std` VARCHAR(45) NULL, " +
-                    "`Sound_avg` VARCHAR(45) NULL, " +
-                    "`Sound_std` VARCHAR(45) NULL, " +
-                    "`Powder980_avg` VARCHAR(45) NULL, " +
-                    "`Powder980_std` VARCHAR(45) NULL, " +
-                    "`Powder780_avg` VARCHAR(45) NULL, " +
-                    "`Powder780_std` VARCHAR(45) NULL, " +
-                    "`Powder650_avg` VARCHAR(45) NULL, " +
-                    "`Powder650_std` VARCHAR(45) NULL, " +
+                    "`LaserPower` VARCHAR(45) NULL, " +
+                    "`Visible` VARCHAR(45) NULL, " +
+                    "`IRFilter` VARCHAR(45) NULL, " +
+                    "`BlueFilter` VARCHAR(45) NULL, " +
+                    "`Sound` VARCHAR(45) NULL, " +
+                    "`Powder980` VARCHAR(45) NULL, " +
+                    "`Powder780` VARCHAR(45) NULL, " +
+                    "`Powder650` VARCHAR(45) NULL, " +
                     "PRIMARY KEY (`Pk`));";
 
                 connection.Open();
@@ -130,33 +136,7 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-        public void AddData(string timer, string data)
-        {
-            string[] splitData = data.Split('/');
-
-            string insertDataQuery = "INSERT INTO " + tableName + " (Time, LaserPower_avg, LaserPower_std, Visible_avg, Visible_std, IRFilter_avg, IRFilter_std, BlueFilter_avg, BlueFilter_std, Sound_avg, Sound_std, Powder980_avg, Powder980_std, Powder780_avg, Powder780_std, Powder650_avg, Powder650_std)" +
-                        "VALUES (@Time, @LaserPower_avg, @LaserPower_std, @Visible_avg, @Visible_std, @IRFilter_avg, @IRFilter_std, @BlueFilter_avg, @BlueFilter_std, @Sound_avg, @Sound_std, @Powder980_avg, @Powder980_std, @Powder780_avg, @Powder780_std, @Powder650_avg, @Powder650_std);";
-            MySqlCommand insertDataCommand = new MySqlCommand(insertDataQuery, connection);
-
-            insertDataCommand.Parameters.AddWithValue("@Time", timer);
-            insertDataCommand.Parameters.AddWithValue("@LaserPower_avg", splitData[0]);
-            insertDataCommand.Parameters.AddWithValue("@LaserPower_std", splitData[1]);
-            insertDataCommand.Parameters.AddWithValue("@Visible_avg", splitData[2]);
-            insertDataCommand.Parameters.AddWithValue("@Visible_std", splitData[3]);
-            insertDataCommand.Parameters.AddWithValue("@IRFilter_avg", splitData[4]);
-            insertDataCommand.Parameters.AddWithValue("@IRFilter_std", splitData[5]);
-            insertDataCommand.Parameters.AddWithValue("@BlueFilter_avg", splitData[6]);
-            insertDataCommand.Parameters.AddWithValue("@BlueFilter_std", splitData[7]);
-            insertDataCommand.Parameters.AddWithValue("@Sound_avg", splitData[8]);
-            insertDataCommand.Parameters.AddWithValue("@Sound_std", splitData[9]);
-            insertDataCommand.Parameters.AddWithValue("@Powder980_avg", splitData[10]);
-            insertDataCommand.Parameters.AddWithValue("@Powder980_std", splitData[11]);
-            insertDataCommand.Parameters.AddWithValue("@Powder780_avg", splitData[12]);
-            insertDataCommand.Parameters.AddWithValue("@Powder780_std", splitData[13]);
-            insertDataCommand.Parameters.AddWithValue("@Powder650_avg", splitData[14]);
-            insertDataCommand.Parameters.AddWithValue("@Powder650_std", splitData[15]);
-            insertDataCommand.ExecuteNonQuery();
-        }
+     
 
         public bool CloseDB()
         {

@@ -8,6 +8,6 @@ namespace DED_MonitoringSensor.Services
 {
     public interface IGetDataService
     {
-        void GetData();
+        void GetData(string getData);
     }
 }

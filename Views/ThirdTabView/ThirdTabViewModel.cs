@@ -83,9 +83,9 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             TextBox2 = "";
         }
 
-        public void GetData()
+        public void GetData(string getData)
         {
-            stringBuilder.Append(SerialViewModel.GetData);
+            stringBuilder.Append(getData);
             stringBuilder.Append("\n");
             if (stringBuilder.Length >= 10000)
             {

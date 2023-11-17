@@ -16,12 +16,6 @@ namespace DED_MonitoringSensor.ViewModels
 
         IGetDataService IGetDataService;
 
-        private string getData;
-        public string GetData
-        {
-            get => getData;
-            set => SetProperty(ref getData, value);
-        }
 
         private string ip;
         public string Ip
@@ -150,8 +144,8 @@ namespace DED_MonitoringSensor.ViewModels
             {
                 IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 0);
                 byte[] receivedBytes = udpClient.EndReceive(ar, ref ipEndPoint);
-                GetData = Encoding.UTF8.GetString(receivedBytes); // 바이트 배열을 문자열로 변환               
-                IGetDataService.GetData();
+                 // 바이트 배열을 문자열로 변환               
+                IGetDataService.GetData(Encoding.UTF8.GetString(receivedBytes));
                 udpClient.BeginReceive(ReceiveCallback, null); // 계속해서 데이터 수신 대기
             }
         }

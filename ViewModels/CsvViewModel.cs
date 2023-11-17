@@ -20,7 +20,6 @@ namespace DED_MonitoringSensor.ViewModels
             get => csvState; set => SetProperty(ref csvState, value);
         }
 
-
         private string line;
 
         private RelayCommand _csvCommand;
@@ -50,55 +49,26 @@ namespace DED_MonitoringSensor.ViewModels
             CsvState = CloseCsv();
             CsvCommand = new RelayCommand(Open);
         }
-        public void Add(string timer, string data)
-        {
-            AddCsv(timer, data);
-        }
 
-        public bool CreateCsv(string line)
-        {
-            string currentDate = DateTime.Now.ToString("yyMMdd_HHmm");
-
-            var dialog = new SaveFileDialog
-            {
-                FileName = currentDate,
-                Filter = "CSV Files (*.csv)|*.csv",
-                DefaultExt = "csv",
-                AddExtension = true
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                // 선택한 경로로 CSV 파일을 저장합니다.
-                csvFilePath = dialog.FileName;
-
-                writer = new StreamWriter(csvFilePath, true, Encoding.UTF8);
-                writer.WriteLine(line);
-                writer.Close();
-                MessageBox.Show("CSV file saved successfully.");
-                return true;
-            }
-
-            return false;
-        }
-
-        public void AddCsv(string timer, string data)
+        public void Add(string timer, double[] dataArray)
         {
             try
             {
                 writer = new StreamWriter(csvFilePath, true, Encoding.UTF8);
-                string[] splitData = data.Split('/');
-                string result = timer;
-                for (int i = 0; i < splitData.Length; i++)
+                StringBuilder stb = new StringBuilder();
+                stb.Append(timer);
+                foreach (double num in dataArray)
                 {
-                    result += "," + splitData[i];
+                    stb.Append(",");
+                    stb.Append(num);
                 }
-                writer.WriteLine(result);
+                writer.WriteLine(stb.ToString());
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                
             }
             finally
             {
@@ -106,6 +76,45 @@ namespace DED_MonitoringSensor.ViewModels
             }
 
         }
+
+
+        public bool CreateCsv(string line)
+        {
+            try
+            {
+                string currentDate = DateTime.Now.ToString("yyMMdd_HHmm");
+
+                var dialog = new SaveFileDialog
+                {
+                    FileName = currentDate,
+                    Filter = "CSV Files (*.csv)|*.csv",
+                    DefaultExt = "csv",
+                    AddExtension = true
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    // 선택한 경로로 CSV 파일을 저장합니다.
+                    csvFilePath = dialog.FileName;
+
+                    writer = new StreamWriter(csvFilePath, true, Encoding.UTF8);
+                    writer.WriteLine(line);
+                    writer.Close();
+                    MessageBox.Show("CSV file saved successfully.");
+                    return true;
+                }
+                return true;
+               
+
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return false;
+            } 
+           
+        }
+
+      
 
         public bool CloseCsv()
         {
