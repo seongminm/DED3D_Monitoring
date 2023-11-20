@@ -6,7 +6,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   static uint32_t started = 0;
-  float vol[8];
+  int vol[8];
   String data;
   if (millis() - started >= 1000) {
     data = "0/";
