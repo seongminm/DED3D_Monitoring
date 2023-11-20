@@ -16,7 +16,7 @@ void loop() {
   }
 
   for (int i = 0; i < 8; i++) {
-    vol[i] = analogRead(i) * 3.3 / 1024.0;
+    vol[i] = analogRead(i) * 33000 / 1024;
     data += String(vol[i]) + "/";
   }
   data += "\n";
