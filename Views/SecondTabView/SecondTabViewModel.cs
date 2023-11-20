@@ -63,9 +63,9 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             IrFilter = new OxyPlotViewModel("IR_Filter", 0, 3.4);
             BlueFilter = new OxyPlotViewModel("Blue_Filter", 0, 3.4);
             Sound = new OxyPlotViewModel("Sound", 0, 3.4);
-            Powder980 = new OxyPlotViewModel("980nm-Powder", 0, 3.4);
-            Powder780 = new OxyPlotViewModel("780nm-Powder", 0, 3.4);
-            Powder650 = new OxyPlotViewModel("650nm-Powder", 0, 3.4);
+            Powder980 = new OxyPlotViewModel("980nm_Powder", 0, 3.4);
+            Powder780 = new OxyPlotViewModel("780nm_Powder", 0, 3.4);
+            Powder650 = new OxyPlotViewModel("650nm_Powder", 0, 3.4);
 
             string line = $"{"Time"},{"LaserPower"},{"Visible"}," +
                 $"{"IRFilter"},{"BlueFilter"}," +
