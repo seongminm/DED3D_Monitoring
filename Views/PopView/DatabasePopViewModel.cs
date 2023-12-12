@@ -6,6 +6,8 @@ namespace DED_MonitoringSensor.Views.PopView
 {
     class DatabasePopViewModel
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         DatabaseModel _databaseModel;
         DatabaseViewModel _databaseViewModel;
 
@@ -16,6 +18,10 @@ namespace DED_MonitoringSensor.Views.PopView
         public string TableName { get; set; }
         public RelayCommand SetCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
+
+        #endregion
+
+        #region 2. 생성자
 
         public DatabasePopViewModel(DatabaseModel databaseModel, DatabaseViewModel dataBaseViewModel)
         {
@@ -30,7 +36,9 @@ namespace DED_MonitoringSensor.Views.PopView
             Password = _databaseModel.Password;
             TableName = _databaseModel.TableName;
         }
+        #endregion
 
+        #region 3. 메서드
         private void Close()
         {
             _databaseViewModel.Close();
@@ -46,7 +54,7 @@ namespace DED_MonitoringSensor.Views.PopView
             _databaseModel.State = true;
             _databaseViewModel.Close();
         }
-
+        #endregion
 
     }
 }

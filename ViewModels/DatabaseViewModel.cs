@@ -12,6 +12,8 @@ namespace DED_MonitoringSensor.ViewModels
 {
     class DatabaseViewModel : ViewModelBase
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         private MySqlConnection connection;
         private string tableName;
 
@@ -33,14 +35,18 @@ namespace DED_MonitoringSensor.ViewModels
             get => mysqlCommand; set => SetProperty(ref mysqlCommand, value);
         }
 
+        #endregion
 
+        #region 2. 생성자
         public DatabaseViewModel()
         {
             MysqlState = false;
             MysqlCommand = new RelayCommand(OpenDatabase);
             databaseModel = new DatabaseModel();
         }
+        #endregion
 
+        #region 3. 메서드
         public void OpenDatabase()
         {
             databasePopView = new DatabasePopView();
@@ -153,6 +159,6 @@ namespace DED_MonitoringSensor.ViewModels
             }
 
         }
-
+        #endregion
     }
 }

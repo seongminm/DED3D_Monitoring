@@ -11,6 +11,8 @@ namespace DED_MonitoringSensor.ViewModels
 {
     class CsvViewModel : ViewModelBase
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         private string csvFilePath; // CSV 파일 경로
         private StreamWriter writer; // CSV 파일 작성자
 
@@ -27,7 +29,9 @@ namespace DED_MonitoringSensor.ViewModels
         {
             get => _csvCommand; set => SetProperty(ref _csvCommand, value);
         }
+        #endregion
 
+        #region 2. 생성자
         public CsvViewModel(string line)
         {
             this.line = line;
@@ -35,7 +39,9 @@ namespace DED_MonitoringSensor.ViewModels
             CsvCommand = new RelayCommand(Open);
             CsvState = false;
         }
+        #endregion
 
+        #region 3. 메서드
         public void Open()
         {
             if (CsvState = CreateCsv(line))
@@ -77,7 +83,6 @@ namespace DED_MonitoringSensor.ViewModels
 
         }
 
-
         public bool CreateCsv(string line)
         {
             try
@@ -114,13 +119,13 @@ namespace DED_MonitoringSensor.ViewModels
            
         }
 
-      
-
         public bool CloseCsv()
         {
             MessageBox.Show(csvFilePath + " Disconnect !");
             return false;
         }
+
+        #endregion
     }
 
 

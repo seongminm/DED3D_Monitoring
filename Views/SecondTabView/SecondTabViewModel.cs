@@ -11,6 +11,8 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 {
     class SecondTabViewModel : ViewModelBase, IGetDataService
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         public UdpViewModel UdpViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
         public OxyPlotViewModel LaserPower { get; set; }
@@ -54,6 +56,9 @@ namespace DED_MonitoringSensor.Views.SecondTabView
         private List<double> powder780 = new List<double>();
         private List<double> powder650 = new List<double>();
 
+        #endregion
+
+        #region 2. 생성자
         public SecondTabViewModel()
         {
             TimerViewModel = new TimerViewModel();
@@ -82,6 +87,10 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             GraphClearCommand = new RelayCommand(ClearGraph);
 
         }
+
+        #endregion
+
+        #region 3. 메서드
 
         private void ClearGraph()
         {
@@ -188,6 +197,6 @@ namespace DED_MonitoringSensor.Views.SecondTabView
 
             }
         }
-    
+        #endregion
     }
 }

@@ -12,6 +12,8 @@ namespace DED_MonitoringSensor.ViewModels
 {
     class UdpViewModel : ViewModelBase
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         UdpClient udpClient;
 
         IGetDataService IGetDataService;
@@ -56,6 +58,9 @@ namespace DED_MonitoringSensor.ViewModels
 
         TimerViewModel timerViewModel;
 
+        #endregion
+
+        #region 2. 생성자
         public UdpViewModel(TimerViewModel timerViewModel, IGetDataService getDataService)
         {
             this.timerViewModel = timerViewModel;
@@ -67,7 +72,9 @@ namespace DED_MonitoringSensor.ViewModels
             UdpOpenState = false;
             UdpContent = "Open";
         }
+        #endregion
 
+        #region 3. 메서드
         private void OpenUdp()
         {
             OpenUdp(Ip, Port);
@@ -149,6 +156,7 @@ namespace DED_MonitoringSensor.ViewModels
                 udpClient.BeginReceive(ReceiveCallback, null); // 계속해서 데이터 수신 대기
             }
         }
+        #endregion
     }
 
 }

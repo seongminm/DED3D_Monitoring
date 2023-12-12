@@ -9,6 +9,8 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
 {
     class ThirdTabViewModel : ViewModelBase, IGetDataService
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         public SerialViewModel SerialViewModel { get; set; }
         public TimerViewModel TimerViewModel { get; set; }
         public RelayCommand ClearCommand { get; set; }
@@ -38,6 +40,9 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             get => textBox2; set => SetProperty(ref textBox2, value);
         }
 
+        #endregion
+
+        #region 2. 생성자
         public ThirdTabViewModel()
         {
             TimerViewModel = new TimerViewModel();
@@ -53,8 +58,9 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             TextBox2 = "";
 
         }
+        #endregion
 
-
+        #region 3. 메서드
         private void SendSerial1()
         {
             if(!SerialViewModel.SerialState)
@@ -97,5 +103,6 @@ namespace DED_MonitoringSensor.Views.ThirdTabView
             }
             Text = stringBuilder.ToString();
         }
+        #endregion
     }
 }

@@ -8,6 +8,8 @@ namespace DED_MonitoringSensor.Views
 {
     class OxyPlotViewModel : ViewModelBase
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         private double output;
         public double Output
         {
@@ -24,7 +26,9 @@ namespace DED_MonitoringSensor.Views
 
         private LineSeries linePlotModel;
 
+        #endregion  
 
+        #region 2. 생성자
         public OxyPlotViewModel(string title)
         {
             PlotModel = new PlotModel { Title = title, TitleFontSize = 11};
@@ -52,6 +56,9 @@ namespace DED_MonitoringSensor.Views
 
         }
 
+        #endregion
+
+        #region 3. 메서드
         public void GrpahUpdate(double x, bool state)
         {
             linePlotModel.Points.Add(new DataPoint(x, output));
@@ -67,7 +74,7 @@ namespace DED_MonitoringSensor.Views
             Std = 0;
         }
 
-       
+        #endregion
 
     }
 }

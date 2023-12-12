@@ -9,6 +9,8 @@ namespace DED_MonitoringSensor.ViewModels
 {
     class SerialViewModel : ViewModelBase
     {
+        #region 1.초기 환경 변수 및 프로퍼티
+
         SerialPort serialPort;
         IGetDataService IGetDataService;
 
@@ -60,6 +62,9 @@ namespace DED_MonitoringSensor.ViewModels
 
         TimerViewModel timerViewModel;
 
+        #endregion
+
+        #region 2. 생성자
         public SerialViewModel(TimerViewModel timerViewModel, IGetDataService getDataService)
         {
 
@@ -75,6 +80,9 @@ namespace DED_MonitoringSensor.ViewModels
             SerialPortCommand = new RelayCommand(LoadSerial);
 
         }
+        #endregion
+
+        #region 3. 메서드
 
         private void LoadSerial()
         {
@@ -151,6 +159,6 @@ namespace DED_MonitoringSensor.ViewModels
             }
 
         }
-
+        #endregion
     }
 }
