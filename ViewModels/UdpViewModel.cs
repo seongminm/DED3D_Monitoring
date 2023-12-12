@@ -75,6 +75,9 @@ namespace DED_MonitoringSensor.ViewModels
         #endregion
 
         #region 3. 메서드
+        /// <summary>
+        /// UDP 연결
+        /// </summary>
         private void OpenUdp()
         {
             OpenUdp(Ip, Port);
@@ -87,6 +90,9 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
+        /// <summary>
+        /// UDP 연결 해제
+        /// </summary>
         private void CloseUdp()
         {
             try
@@ -109,6 +115,10 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
+        /// <summary>
+        /// UDP 데이터 송신
+        /// </summary>
+        /// <param name="message"></param>
         public void SendUdp(string message)
         {
             if(UdpOpenState)
@@ -118,7 +128,11 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// UDP 연결 
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
         public void OpenUdp(string ip, string port)
         {
             try
@@ -142,9 +156,11 @@ namespace DED_MonitoringSensor.ViewModels
             }
 
         }
-
-
-
+        
+        /// <summary>
+        /// 데이터 수신 시 호출
+        /// </summary>
+        /// <param name="ar"></param>
         private void ReceiveCallback(IAsyncResult ar)
         {
             if (UdpOpenState)

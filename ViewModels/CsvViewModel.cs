@@ -42,6 +42,9 @@ namespace DED_MonitoringSensor.ViewModels
         #endregion
 
         #region 3. 메서드
+        /// <summary>
+        /// CSV 파일 버튼 스위치 
+        /// </summary>
         public void Open()
         {
             if (CsvState = CreateCsv(line))
@@ -49,13 +52,22 @@ namespace DED_MonitoringSensor.ViewModels
                 CsvCommand = new RelayCommand(Close);
             }
 
-        }
+        } 
+
+        /// <summary>
+        /// CSV 파일 버튼 스위치
+        /// </summary>
         public void Close()
         {
             CsvState = CloseCsv();
             CsvCommand = new RelayCommand(Open);
         }
 
+        /// <summary>
+        /// CSV 파일 데이터 추가
+        /// </summary>
+        /// <param name="timer"></param>
+        /// <param name="dataArray"></param>
         public void Add(string timer, double[] dataArray)
         {
             try
@@ -83,6 +95,11 @@ namespace DED_MonitoringSensor.ViewModels
 
         }
 
+        /// <summary>
+        /// CSV파일 생성
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public bool CreateCsv(string line)
         {
             try
@@ -119,6 +136,10 @@ namespace DED_MonitoringSensor.ViewModels
            
         }
 
+        /// <summary>
+        /// CSV 파일 연결해제
+        /// </summary>
+        /// <returns></returns>
         public bool CloseCsv()
         {
             MessageBox.Show(csvFilePath + " Disconnect !");

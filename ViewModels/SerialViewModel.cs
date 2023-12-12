@@ -83,12 +83,17 @@ namespace DED_MonitoringSensor.ViewModels
         #endregion
 
         #region 3. 메서드
-
+        /// <summary>
+        /// 시리얼 통신 연결 가능한 포트 출력
+        /// </summary>
         private void LoadSerial()
         {
             SerialPorts = new List<string>(SerialPort.GetPortNames());
         }
 
+        /// <summary>
+        /// 시리얼 통신 연결
+        /// </summary>
         private void OpenSerial()
         {
             try
@@ -113,6 +118,9 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
+        /// <summary>
+        /// 시리얼 통신 연결 해제
+        /// </summary>
         public void CloseSerial()
         {
             
@@ -137,7 +145,11 @@ namespace DED_MonitoringSensor.ViewModels
                 timerViewModel.Stop();
             }
         }
-
+        
+        /// <summary>
+        /// 시리얼 통신 데이터 송신
+        /// </summary>
+        /// <param name="message"></param>
         public void SendSerial(string message)
         {
             if (serialPort.IsOpen)
@@ -146,7 +158,11 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// 시리얼 통신 데이터 수신될 때마다 호출
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try

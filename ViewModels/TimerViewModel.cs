@@ -31,17 +31,28 @@ namespace DED_MonitoringSensor.ViewModels
         #endregion
 
         #region 3. 메서드
+        /// <summary>
+        /// 타이머 시간 기능
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             _seconds++;
             TimerContent = TimeSpan.FromSeconds(_seconds).ToString(@"hh\:mm\:ss");
         }
 
+        /// <summary>
+        /// 타이머 시작
+        /// </summary>
         public void Start()
         {
             _timer.Start();
         }
 
+        /// <summary>
+        /// 타이머 정지
+        /// </summary>
         public void Stop()
         {
             _timer.Stop();

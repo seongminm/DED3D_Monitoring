@@ -47,6 +47,9 @@ namespace DED_MonitoringSensor.ViewModels
         #endregion
 
         #region 3. 메서드
+        /// <summary>
+        /// 데이터베이스 인터페이스 열기
+        /// </summary>
         public void OpenDatabase()
         {
             databasePopView = new DatabasePopView();
@@ -69,11 +72,17 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
+        /// <summary>
+        /// 데이터베이스 인터페이스 닫기
+        /// </summary>
         public void Close()
         {
             databasePopView.Close();
         }
 
+        /// <summary>
+        /// 데이터 베이스 연결 해제
+        /// </summary>
         public void CloseDatabase()
         {
             MysqlState = CloseDB();
@@ -83,6 +92,11 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
+        /// <summary>
+        /// 데이터베이스 데이터 추가
+        /// </summary>
+        /// <param name="timer"></param>
+        /// <param name="dataArray"></param>
         public void AddDatabase(string timer, double[] dataArray)
         {
             string insertDataQuery = "INSERT INTO " + tableName + " (Time, Visible, IRFilter, BlueFilter, Powder980, Sound, LaserPower, Powder780, Powder650)" +
@@ -102,7 +116,15 @@ namespace DED_MonitoringSensor.ViewModels
 
         }
 
-
+        /// <summary>
+        /// 인터페이스에 작성한 정보를 통해 데이터베이스 연결
+        /// </summary>
+        /// <param name="_userName"></param>
+        /// <param name="_pw"></param>
+        /// <param name="_server"></param>
+        /// <param name="_database"></param>
+        /// <param name="_tableName"></param>
+        /// <returns></returns>
         public bool OpenDatabase(string _userName, string _pw, string _server, string _database, string _tableName)
         {
             try
@@ -142,8 +164,10 @@ namespace DED_MonitoringSensor.ViewModels
             }
         }
 
-     
-
+        /// <summary>
+        /// 데이터베이스 연결 해제
+        /// </summary>
+        /// <returns></returns>
         public bool CloseDB()
         {
             try

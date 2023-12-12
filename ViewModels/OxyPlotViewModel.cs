@@ -59,13 +59,20 @@ namespace DED_MonitoringSensor.Views
         #endregion
 
         #region 3. 메서드
+        /// <summary>
+        /// 그래프에 데이터를 추가하고 UI업데이트
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="state"></param>
         public void GrpahUpdate(double x, bool state)
         {
             linePlotModel.Points.Add(new DataPoint(x, output));
             PlotModel.InvalidatePlot(state);
         }
 
-
+        /// <summary>
+        /// 그래프 초기화
+        /// </summary>
         public void GrahpClear()
         {
             linePlotModel.Points.Clear();
