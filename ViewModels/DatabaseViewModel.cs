@@ -79,17 +79,17 @@ namespace DED_MonitoringSensor.ViewModels
 
         public void AddDatabase(string timer, double[] dataArray)
         {
-            string insertDataQuery = "INSERT INTO " + tableName + " (Time, LaserPower, Visible, IRFilter, BlueFilter, Sound, Powder980, Powder780, Powder650)" +
-                        "VALUES (@Time, @LaserPower, @Visible, @IRFilter, @BlueFilter, @Sound, @Powder980, @Powder780, @Powder650);";
+            string insertDataQuery = "INSERT INTO " + tableName + " (Time, Visible, IRFilter, BlueFilter, Powder980, Sound, LaserPower, Powder780, Powder650)" +
+                        "VALUES (@Time, @Visible, @IRFilter, @BlueFilter, @Powder980, @Sound, @LaserPower, @Powder780, @Powder650);";
             MySqlCommand insertDataCommand = new MySqlCommand(insertDataQuery, connection);
 
             insertDataCommand.Parameters.AddWithValue("@Time", timer);
-            insertDataCommand.Parameters.AddWithValue("@LaserPower", dataArray[0]);
-            insertDataCommand.Parameters.AddWithValue("@Visible", dataArray[1]);
-            insertDataCommand.Parameters.AddWithValue("@IRFilter", dataArray[2]);
-            insertDataCommand.Parameters.AddWithValue("@BlueFilter", dataArray[3]);
+            insertDataCommand.Parameters.AddWithValue("@Visible", dataArray[0]);
+            insertDataCommand.Parameters.AddWithValue("@IRFilter", dataArray[1]);
+            insertDataCommand.Parameters.AddWithValue("@BlueFilter", dataArray[2]);
+            insertDataCommand.Parameters.AddWithValue("@Powder980", dataArray[3]);
             insertDataCommand.Parameters.AddWithValue("@Sound", dataArray[4]);
-            insertDataCommand.Parameters.AddWithValue("@Powder980", dataArray[5]);
+            insertDataCommand.Parameters.AddWithValue("@LaserPower", dataArray[5]);
             insertDataCommand.Parameters.AddWithValue("@Powder780", dataArray[6]);
             insertDataCommand.Parameters.AddWithValue("@Powder650", dataArray[7]);
             insertDataCommand.ExecuteNonQuery();
@@ -111,12 +111,12 @@ namespace DED_MonitoringSensor.ViewModels
                 connection = new MySqlConnection(connectionString);
                 string createTableQuery = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (`Pk` INT NOT NULL AUTO_INCREMENT, " +
                     "`Time` VARCHAR(45) NULL, " +
-                    "`LaserPower` VARCHAR(45) NULL, " +
                     "`Visible` VARCHAR(45) NULL, " +
                     "`IRFilter` VARCHAR(45) NULL, " +
                     "`BlueFilter` VARCHAR(45) NULL, " +
-                    "`Sound` VARCHAR(45) NULL, " +
                     "`Powder980` VARCHAR(45) NULL, " +
+                    "`Sound` VARCHAR(45) NULL, " +
+                    "`LaserPower` VARCHAR(45) NULL, " +
                     "`Powder780` VARCHAR(45) NULL, " +
                     "`Powder650` VARCHAR(45) NULL, " +
                     "PRIMARY KEY (`Pk`));";

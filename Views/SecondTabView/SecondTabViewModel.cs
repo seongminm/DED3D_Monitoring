@@ -67,10 +67,10 @@ namespace DED_MonitoringSensor.Views.SecondTabView
             Powder780 = new OxyPlotViewModel("780nm_Powder", 0, 3.4);
             Powder650 = new OxyPlotViewModel("650nm_Powder", 0, 3.4);
 
-            string line = $"{"Time"},{"LaserPower"},{"Visible"}," +
-                $"{"IRFilter"},{"BlueFilter"}," +
+            string line = $"{"Time"},{"Visible"},{"IRFilter"}," +
+                $"{"BlueFilter"},{"Powder980"}," +
                 $"{"Sound"}," +
-                $"{"Powder980"},{"Powder780"},{"Powder650"}";
+                $"{"LaserPower"},{"Powder780"},{"Powder650"}";
             CsvViewModel = new CsvViewModel(line);
             DatabaseViewModel = new DatabaseViewModel();
 
